@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CordovaService } from './cordova.service';
 declare var device;
 
 @Component({
@@ -8,17 +9,27 @@ declare var device;
 })
 export class AppComponent implements OnInit {
   title = 'Viet';
+  constructor(private cordovaService: CordovaService) {
+
+  }
 
   ngOnInit() {
-    document.addEventListener('deviceready', () => {
-      alert(device.platform);
-    }, false);
+    // document.addEventListener('deviceready', () => {
+    //   alert(device.platform);
+    // }, false);
   }
 
   readContact = (num) => {
     switch(num) {
       case 1: {
         alert('contact type: ' + 1);
+        console.log('cordovaService:', this.cordovaService);
+        console.log('getCordova:', this.cordovaService.getCordova());
+        // window.plugins.contactPlugin.show('getContacts', function() {
+        //   console.log('SUCCESS');
+        // }, function(error){
+        //   console.log('ERROR:', error);
+        // });
         break;
       }
       case 2: {
