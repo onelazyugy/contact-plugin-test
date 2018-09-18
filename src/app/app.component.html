@@ -1,0 +1,38 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome {{ title }}!
+  </h1>
+  <div>
+    <h3>TEST ANDROID RUN TIME PERMISSION</h3>
+    <hr>
+    <div style="background-color: lightseagreen; padding: 20px;">
+      <h4>ANDROID 6 MARSHMALLOW AND BEYONE</h4>
+      <h5>minSdkVersion >= 23</h5>
+      <h5>targetSdkVersion = 27</h5>
+      <div>
+        <div class="row" style="margin-bottom: 20px;">
+            <button type="button" class="btn btn-primary btn-lg" (click)="readContact(1)">READ CONTACT</button>
+        </div>
+        <div class="row">
+          <button type="button" class="btn btn-primary btn-lg" (click)="writeExtStorage(1)">WRITE EXTERNAL STORAGE</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div style="background-color: orange; padding: 20px;">
+      <h4>ANDROID 5 LOLLIPOP AND BELOW</h4>
+      <h5>minSdkVersion <= 19</h5>
+      <h5>targetSdkVersion = 22</h5>
+      <div>
+        <div class="row" style="margin-bottom: 20px;">
+          <button type="button" class="btn btn-primary btn-lg" (click)="readContact(2)">READ CONTACT</button>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg" (click)="writeExtStorage(2)">WRITE EXTERNAL STORAGE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

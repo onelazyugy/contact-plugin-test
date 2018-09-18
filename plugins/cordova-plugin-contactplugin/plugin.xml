@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-contactplugin" version="0.0.1">
+    <name>ContactPlugin</name>
+
+    <description>An Android Cordova plugin that allows users to display simple Toast messages at the bottom of the screen.</description>
+    <license>MIT</license>
+
+    <keywords>cordova,android,toast,message,alert</keywords>
+    <repo>https://github.com/stanidesis/toastyplugin/Toast-PhoneGap-Plugin.git</repo>
+    <issue>https://github.com/stanidesis/toastyplugin/issues</issue>
+  
+    <engines>
+        <engine name="cordova" version=">=3.0.0"/>
+    </engines>
+  
+    <js-module src="www/contactplugin.js" name="contactPlugin">
+        <clobbers target="window.plugins.contactPlugin" />
+    </js-module>
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ContactPlugin">
+                <param name="android-package" value="com.vietle.contactplugintest.ContactPlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/com/vietle/contactplugintest/ContactPlugin.java" target-dir="src/com/vietle/contactplugintest" />
+    </platform>
+</plugin>
