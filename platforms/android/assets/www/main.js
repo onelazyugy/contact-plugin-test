@@ -56,20 +56,44 @@ module.exports = "<!--The content below is only a placeholder and can be replace
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _cordova_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cordova.service */ "./src/app/cordova.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(cordovaService) {
+        var _this = this;
+        this.cordovaService = cordovaService;
         this.title = 'Viet';
         this.readContact = function (num) {
             switch (num) {
                 case 1: {
-                    alert('contact type: ' + 1);
+                    console.log('contact type: ' + 1);
+                    console.log('cordovaService:', _this.cordovaService);
+                    console.log('getCordova:', _this.cordovaService.getCordova());
+                    //
+                    var cordova = _this.cordovaService.getCordova();
+                    var successCallback = function (res) {
+                        console.log('inside successCallback:', res);
+                    };
+                    var errorCallback = function (error) {
+                        console.log('inside errorCallback:', error);
+                    };
+                    try {
+                        cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+                    }
+                    catch (e) {
+                        errorCallback(e);
+                    }
+                    //
                     break;
                 }
                 case 2: {
@@ -92,16 +116,17 @@ var AppComponent = /** @class */ (function () {
         };
     }
     AppComponent.prototype.ngOnInit = function () {
-        document.addEventListener('deviceready', function () {
-            alert(device.platform);
-        }, false);
+        // document.addEventListener('deviceready', () => {
+        //   alert(device.platform);
+        // }, false);
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [_cordova_service__WEBPACK_IMPORTED_MODULE_1__["CordovaService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -123,12 +148,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _cordova_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cordova.service */ "./src/app/cordova.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -143,11 +170,74 @@ var AppModule = /** @class */ (function () {
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"]
             ],
-            providers: [],
+            providers: [_cordova_service__WEBPACK_IMPORTED_MODULE_3__["CordovaService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/cordova.service.ts":
+/*!************************************!*\
+  !*** ./src/app/cordova.service.ts ***!
+  \************************************/
+/*! exports provided: CordovaService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CordovaService", function() { return CordovaService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+// import { Subject } from 'rxjs/Subject';
+
+// import { Observable } from 'rxjs';
+// import 'rxjs/add/observable/fromEvent';
+// import 'rxjs/add/operator/map';
+// https://medium.com/@EliaPalme/how-to-wrap-an-angular-app-with-apache-cordova-909024a25d79
+function _window() {
+    // return the global native browser window object
+    return window;
+}
+var CordovaService = /** @class */ (function () {
+    function CordovaService(zone) {
+        var _this = this;
+        this.zone = zone;
+        this.resume = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"](null);
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["fromEvent"])(document, 'resume').subscribe(function (event) {
+            _this.zone.run(function () {
+                _this.onResume();
+            });
+        });
+    }
+    CordovaService.prototype.getCordova = function () {
+        return _window().cordova;
+    };
+    CordovaService.prototype.onCordova = function () {
+        return !!_window().cordova;
+    };
+    CordovaService.prototype.onResume = function () {
+        this.resume.next(true);
+    };
+    CordovaService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]])
+    ], CordovaService);
+    return CordovaService;
 }());
 
 
@@ -203,6 +293,10 @@ if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].produc
 }
 Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"])
     .catch(function (err) { return console.log(err); });
+var onDeviceReady = function () {
+    Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"]);
+};
+document.addEventListener('deviceready', onDeviceReady, false);
 
 
 /***/ }),

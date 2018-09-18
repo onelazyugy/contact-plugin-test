@@ -76,14 +76,24 @@ var AppComponent = /** @class */ (function () {
         this.readContact = function (num) {
             switch (num) {
                 case 1: {
-                    alert('contact type: ' + 1);
+                    console.log('contact type: ' + 1);
                     console.log('cordovaService:', _this.cordovaService);
-                    console.log('getCordova:', _this.cordovaService.cordova());
-                    // window.plugins.contactPlugin.show('getContacts', function() {
-                    //   console.log('SUCCESS');
-                    // }, function(error){
-                    //   console.log('ERROR:', error);
-                    // });
+                    console.log('getCordova:', _this.cordovaService.getCordova());
+                    //
+                    var cordova = _this.cordovaService.getCordova();
+                    var successCallback = function (res) {
+                        console.log('inside successCallback:', res);
+                    };
+                    var errorCallback = function (error) {
+                        console.log('inside errorCallback:', error);
+                    };
+                    try {
+                        cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+                    }
+                    catch (e) {
+                        errorCallback(e);
+                    }
+                    //
                     break;
                 }
                 case 2: {
@@ -106,9 +116,9 @@ var AppComponent = /** @class */ (function () {
         };
     }
     AppComponent.prototype.ngOnInit = function () {
-        document.addEventListener('deviceready', function () {
-            alert(device.platform);
-        }, false);
+        // document.addEventListener('deviceready', () => {
+        //   alert(device.platform);
+        // }, false);
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -214,20 +224,12 @@ var CordovaService = /** @class */ (function () {
             });
         });
     }
-    Object.defineProperty(CordovaService.prototype, "cordova", {
-        get: function () {
-            return _window().cordova;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(CordovaService.prototype, "onCordova", {
-        get: function () {
-            return !!_window().cordova;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    CordovaService.prototype.getCordova = function () {
+        return _window().cordova;
+    };
+    CordovaService.prototype.onCordova = function () {
+        return !!_window().cordova;
+    };
     CordovaService.prototype.onResume = function () {
         this.resume.next(true);
     };

@@ -22,14 +22,23 @@ export class AppComponent implements OnInit {
   readContact = (num) => {
     switch(num) {
       case 1: {
-        alert('contact type: ' + 1);
+        console.log('contact type: ' + 1);
         console.log('cordovaService:', this.cordovaService);
         console.log('getCordova:', this.cordovaService.getCordova());
-        // window.plugins.contactPlugin.show('getContacts', function() {
-        //   console.log('SUCCESS');
-        // }, function(error){
-        //   console.log('ERROR:', error);
-        // });
+        //
+        const cordova = this.cordovaService.getCordova();
+        const successCallback = function(res) {
+          console.log('inside successCallback:', res);
+        };
+        const errorCallback = function(error) {
+          console.log('inside errorCallback:', error);
+        };
+        try {
+          cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+        }catch(e){
+          errorCallback(e);
+        }
+        //
         break;
       }
       case 2: {
