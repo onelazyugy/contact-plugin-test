@@ -41,7 +41,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Welcome {{ title }}!\n  </h1>\n  <div>\n    <h3>TEST ANDROID RUN TIME PERMISSION</h3>\n    <hr>\n    <div style=\"background-color: lightseagreen; padding: 20px;\">\n      <h4>ANDROID 6 MARSHMALLOW AND BEYONE</h4>\n      <h5>minSdkVersion >= 23</h5>\n      <h5>targetSdkVersion = 27</h5>\n      <div>\n        <div class=\"row\" style=\"margin-bottom: 20px;\">\n            <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"readContact(1)\">READ CONTACT</button>\n        </div>\n        <div class=\"row\">\n          <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"writeExtStorage(1)\">WRITE EXTERNAL STORAGE</button>\n        </div>\n      </div>\n    </div>\n    <hr>\n    <div style=\"background-color: orange; padding: 20px;\">\n      <h4>ANDROID 5 LOLLIPOP AND BELOW</h4>\n      <h5>minSdkVersion <= 19</h5>\n      <h5>targetSdkVersion = 22</h5>\n      <div>\n        <div class=\"row\" style=\"margin-bottom: 20px;\">\n          <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"readContact(2)\">READ CONTACT</button>\n        </div>\n        <div>\n            <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"writeExtStorage(2)\">WRITE EXTERNAL STORAGE</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<div style=\"text-align:center\">\n  <h1>\n    Welcome {{ title }}!\n  </h1>\n  <div>\n    <h3>TEST ANDROID RUN TIME PERMISSION</h3>\n    <hr>\n    <div style=\"background-color: lightseagreen; padding: 20px;\">\n      <h4>ANDROID 6 MARSHMALLOW AND BEYONE</h4>\n      <h5>minSdkVersion >= 23</h5>\n      <h5>targetSdkVersion = 27</h5>\n      <div>\n        <div class=\"row\" style=\"margin-bottom: 20px;\">\n            <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"readContact(1)\">READ CONTACT</button>\n        </div>\n        <div class=\"row\">\n          <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"writeExtStorage(1)\">WRITE EXTERNAL STORAGE</button>\n        </div>\n        <div class=\"row\">\n          <div>{{contacts}}</div>\n          <!-- <div *ngIf=\"contacts !== undefined && contact.success !== undefined && contact.success.success\">\n            <div *ngFor=\"let contact of contacts\">\n              <div>{{contact.id}}</div>\n              <div>{{contact.name}}</div>\n            </div>\n          </div> -->\n        </div>\n      </div>\n    </div>\n    <hr>\n    <div style=\"background-color: orange; padding: 20px;\">\n      <h4>ANDROID 5 LOLLIPOP AND BELOW</h4>\n      <h5>minSdkVersion <= 19</h5>\n      <h5>targetSdkVersion = 22</h5>\n      <div>\n        <div class=\"row\" style=\"margin-bottom: 20px;\">\n          <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"readContact(2)\">READ CONTACT</button>\n        </div>\n        <div>\n            <button type=\"button\" class=\"btn btn-primary btn-lg\" (click)=\"writeExtStorage(2)\">WRITE EXTERNAL STORAGE</button>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -73,6 +73,7 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         this.cordovaService = cordovaService;
         this.title = 'Viet';
+        this.contacts = '';
         this.readContact = function (num) {
             switch (num) {
                 case 1: {
@@ -81,17 +82,25 @@ var AppComponent = /** @class */ (function () {
                     console.log('getCordova:', _this.cordovaService.getCordova());
                     //
                     var cordova = _this.cordovaService.getCordova();
-                    var successCallback = function (res) {
-                        console.log('inside successCallback:', res);
-                    };
-                    var errorCallback = function (error) {
-                        console.log('inside errorCallback:', error);
-                    };
+                    // const successCallback = function(res) {
+                    //   console.log('inside successCallback:', res);
+                    //   this.contacts = res;
+                    // };
+                    // const errorCallback = function(error) {
+                    //   console.log('inside errorCallback:', error);
+                    // };
                     try {
-                        cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+                        // cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+                        cordova.exec(function (res) {
+                            console.log('inside successCallback:', res);
+                            _this.contacts = res;
+                        }, function (error) {
+                            console.log('inside errorCallback:', error);
+                        }, 'ContactPlugin', 'getContacts', []);
                     }
                     catch (e) {
-                        errorCallback(e);
+                        // errorCallback(e);
+                        console.error('error', e);
                     }
                     //
                     break;

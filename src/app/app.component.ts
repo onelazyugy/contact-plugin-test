@@ -9,6 +9,7 @@ declare var device;
 })
 export class AppComponent implements OnInit {
   title = 'Viet';
+  contacts = '';
   constructor(private cordovaService: CordovaService) {
 
   }
@@ -27,16 +28,26 @@ export class AppComponent implements OnInit {
         console.log('getCordova:', this.cordovaService.getCordova());
         //
         const cordova = this.cordovaService.getCordova();
-        const successCallback = function(res) {
-          console.log('inside successCallback:', res);
-        };
-        const errorCallback = function(error) {
-          console.log('inside errorCallback:', error);
-        };
+        // const successCallback = function(res) {
+        //   console.log('inside successCallback:', res);
+        //   this.contacts = res;
+        // };
+        // const errorCallback = function(error) {
+        //   console.log('inside errorCallback:', error);
+        // };
         try {
-          cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+          // cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+          cordova.exec(
+          (res) => {
+            console.log('inside successCallback:', res);
+            this.contacts = res;
+          }, 
+          (error) => {
+            console.log('inside errorCallback:', error);
+          }, 'ContactPlugin', 'getContacts', []);
         }catch(e){
-          errorCallback(e);
+          // errorCallback(e);
+          console.error('error', e);
         }
         //
         break;

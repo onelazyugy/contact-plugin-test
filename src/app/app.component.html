@@ -17,6 +17,15 @@
         <div class="row">
           <button type="button" class="btn btn-primary btn-lg" (click)="writeExtStorage(1)">WRITE EXTERNAL STORAGE</button>
         </div>
+        <div class="row">
+          <div>{{contacts}}</div>
+          <!-- <div *ngIf="contacts !== undefined && contact.success !== undefined && contact.success.success">
+            <div *ngFor="let contact of contacts">
+              <div>{{contact.id}}</div>
+              <div>{{contact.name}}</div>
+            </div>
+          </div> -->
+        </div>
       </div>
     </div>
     <hr>
