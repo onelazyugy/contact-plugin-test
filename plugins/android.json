@@ -1,18 +1,21 @@
 {
-    "prepare_queue": {
-        "installed": [],
-        "uninstalled": []
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.vietle.contactplugintest"
     },
-    "config_munge": {
-        "files": {}
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.vietle.contactplugintest"
     },
-    "installed_plugins": {
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.vietle.contactplugintest"
-        },
-        "cordova-plugin-contactplugin": {
-            "PACKAGE_NAME": "com.vietle.contactplugintest"
-        }
-    },
-    "dependent_plugins": {}
+    "cordova-plugin-contactplugin": {
+      "PACKAGE_NAME": "com.vietle.contactplugintest"
+    }
+  },
+  "dependent_plugins": {}
 }

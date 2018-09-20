@@ -9,9 +9,8 @@ declare var device;
 })
 export class AppComponent implements OnInit {
   title = 'Viet';
-  constructor(private cordovaService: CordovaService) {
-
-  }
+  permissionGranted = false;
+  constructor(private cordovaService: CordovaService) {}
 
   ngOnInit() {
     // document.addEventListener('deviceready', () => {
@@ -25,20 +24,22 @@ export class AppComponent implements OnInit {
         console.log('contact type: ' + 1);
         console.log('cordovaService:', this.cordovaService);
         console.log('getCordova:', this.cordovaService.getCordova());
-        //
         const cordova = this.cordovaService.getCordova();
-        const successCallback = function(res) {
-          console.log('inside successCallback:', res);
-        };
-        const errorCallback = function(error) {
-          console.log('inside errorCallback:', error);
-        };
         try {
-          cordova.exec(successCallback, errorCallback, 'ContactPlugin', 'getContacts', []);
+          cordova.exec(
+            (res)=>{
+              console.log('inside successCallback:', res);
+              const responseJSON = JSON.parse(res);
+              console.log('responseJSON:', responseJSON);
+              this.permissionGranted = responseJSON.isUserGrantedPermission;
+              console.log('this.permissionGranted:', this.permissionGranted)
+            }, 
+            (error)=>{
+              console.log('inside errorCallback:', error);
+            }, 'ContactPlugin', 'getContacts', []);
         }catch(e){
-          errorCallback(e);
+          console.log('error:', e);
         }
-        //
         break;
       }
       case 2: {

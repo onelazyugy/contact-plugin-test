@@ -1,18 +1,26 @@
 {
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1"
-        },
-        "is_top_level": true,
-        "variables": {}
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@1"
     },
-    "cordova-plugin-contactplugin": {
-        "source": {
-            "type": "local",
-            "path": "../contact-plugin"
-        },
-        "is_top_level": true,
-        "variables": {}
-    }
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-device": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-device@^2.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-contactplugin": {
+    "source": {
+      "type": "local",
+      "path": "/Users/viet/git/CORDOVA/contact-plugin-test/node_modules/cordova-plugin-contactplugin"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
 }

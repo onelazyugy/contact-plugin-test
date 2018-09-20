@@ -23,4 +23,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <plugin name="cordova-plugin-contactplugin" spec="../contact-plugin" />
+    <engine name="android" spec="^7.1.1" />
+    <engine name="ios" spec="^4.5.5" />
 </widget>
