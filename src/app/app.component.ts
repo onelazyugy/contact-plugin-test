@@ -10,6 +10,7 @@ declare var device;
 export class AppComponent implements OnInit {
   title = 'Viet';
   permissionGranted = false;
+  contacts = [];
   constructor(private cordovaService: CordovaService) {}
 
   ngOnInit() {
@@ -29,9 +30,8 @@ export class AppComponent implements OnInit {
           cordova.exec(
             (res)=>{
               console.log('inside successCallback:', res);
-              const responseJSON = JSON.parse(res);
-              console.log('responseJSON:', responseJSON);
-              this.permissionGranted = responseJSON.isUserGrantedPermission;
+              this.permissionGranted = res.isUserGrantedPermission;
+              this.contacts = res.contacts;
               console.log('this.permissionGranted:', this.permissionGranted)
             }, 
             (error)=>{

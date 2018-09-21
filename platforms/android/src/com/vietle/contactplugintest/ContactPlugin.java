@@ -102,10 +102,13 @@ public class ContactPlugin extends CordovaPlugin {
         obj.put("isUserGrantedPermission", true);
         JSONArray contacts = new JSONArray();
         for(ContactData contactData : contactDataList) {
-          contacts.put(contactData);
+          JSONObject tempObj = new JSONObject();
+          tempObj.put("contactID", contactData.getContactID());
+          tempObj.put("contactName", contactData.getName());
+          contacts.put(tempObj);
         }
         obj.put("contacts", contacts);
-        this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, obj.toString()));
+        this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, obj));
       }
     } catch (Exception e) {
       JSONObject obj = new JSONObject();
